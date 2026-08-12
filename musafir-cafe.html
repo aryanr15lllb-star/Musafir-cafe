@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Musafir Cafe — Chakia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Kavoon&family=Mukta:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night: #182849;
+    --night-2: #223766;
+    --amber: #F2A73B;
+    --amber-soft: #FBD9A0;
+    --cream: #FBF3E3;
+    --brown: #6E3D19;
+    --red: #C1443C;
+    --green: #3F6B4A;
+    --ink: #241708;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Mukta', sans-serif;
+    background:var(--cream);
+    color:var(--ink);
+    padding-bottom:76px;
+  }
+  h1,h2,h3,.signboard{font-family:'Baloo 2', sans-serif;}
+  .brand-font{font-family:'Kavoon', cursive; letter-spacing:0.5px;}
+  a{text-decoration:none; color:inherit;}
+  img{max-width:100%; display:block;}
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:sticky; top:0; z-index:50;
+    background:var(--night);
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 20px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.2);
+  }
+  .brand{color:var(--amber-soft); font-family:'Baloo 2'; font-weight:700; font-size:1.2rem;}
+  .navlinks{display:flex; gap:18px; font-size:0.92rem;}
+  .navlinks a{color:var(--cream); opacity:0.85; transition:opacity .2s;}
+  .navlinks a:hover{opacity:1; color:var(--amber);}
+  .navtoggle{display:none; background:none; border:none; color:var(--cream); font-size:1.5rem; cursor:pointer;}
+  @media(max-width:640px){
+    .navlinks{
+      position:fixed; top:56px; right:0; left:0; background:var(--night-2);
+      flex-direction:column; padding:14px 24px; gap:14px;
+      transform:translateY(-120%); transition:transform .25s ease;
+      border-bottom:1px solid rgba(255,255,255,0.1);
+    }
+    .navlinks.open{transform:translateY(0);}
+    .navtoggle{display:block;}
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background:radial-gradient(ellipse at top, var(--night-2) 0%, var(--night) 60%);
+    padding:70px 20px 90px;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
+  .bulb-wrap{
+    width:6px; height:70px; background:linear-gradient(var(--night-2), #555);
+    margin:0 auto; position:relative;
+  }
+  .bulb{
+    width:34px; height:40px; border-radius:50% 50% 45% 45%;
+    background:radial-gradient(circle at 45% 35%, #fff6da, var(--amber) 70%);
+    margin:0 auto; margin-top:-2px;
+    box-shadow:0 0 30px 12px rgba(242,167,59,0.45), 0 0 70px 30px rgba(242,167,59,0.15);
+    animation:flicker 4s infinite ease-in-out;
+  }
+  @keyframes flicker{
+    0%,100%{opacity:1;} 48%{opacity:1;} 50%{opacity:0.75;} 52%{opacity:1;} 76%{opacity:0.9;}
+  }
+  .board{
+    display:inline-block; margin-top:26px;
+    background:linear-gradient(160deg, #7a4a24, #5c3417);
+    border:5px solid #3f240d;
+    border-radius:10px;
+    padding:28px 40px;
+    box-shadow:0 18px 40px rgba(0,0,0,0.4), inset 0 0 0 2px rgba(255,255,255,0.05);
+    position:relative;
+  }
+  .board::before, .board::after{
+    content:''; position:absolute; top:-40px; width:4px; height:44px; background:#2b1a0c;
+  }
+  .board::before{left:22px; transform:rotate(-8deg);}
+  .board::after{right:22px; transform:rotate(8deg);}
+  .board h1{
+    color:var(--amber-soft); font-size:2.6rem; letter-spacing:0.5px;
+    text-shadow:0 3px 0 rgba(0,0,0,0.35);
+  }
+  .board .tagline{
+    color:var(--cream); opacity:0.85; margin-top:8px; font-size:1.02rem;
+  }
+  .steam{
+    position:absolute; width:10px; height:10px; border-radius:50%;
+    background:rgba(255,255,255,0.5); filter:blur(3px);
+    animation:rise 3.2s infinite ease-in;
+  }
+  .steam.s1{left:38%; bottom:-6px; animation-delay:0s;}
+  .steam.s2{left:52%; bottom:-6px; animation-delay:1.1s;}
+  .steam.s3{left:46%; bottom:-6px; animation-delay:2.1s;}
+  @keyframes rise{
+    0%{transform:translateY(0) scale(0.6); opacity:0;}
+    20%{opacity:0.6;}
+    100%{transform:translateY(-90px) scale(1.4); opacity:0;}
+  }
+  .hero-cta{
+    margin-top:34px; display:inline-flex; gap:14px; flex-wrap:wrap; justify-content:center;
+  }
+  .btn{
+    display:inline-block; padding:12px 26px; border-radius:30px; font-weight:600;
+    font-size:0.95rem; cursor:pointer; border:none; transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .btn:active{transform:scale(0.97);}
+  .btn-amber{background:var(--amber); color:var(--ink);}
+  .btn-amber:hover{box-shadow:0 6px 18px rgba(242,167,59,0.4);}
+  .btn-outline{border:2px solid var(--amber-soft); color:var(--amber-soft); background:transparent;}
+
+  /* ---------- SECTION generic ---------- */
+  section{padding:64px 20px; max-width:1000px; margin:0 auto;}
+  .eyebrow{
+    color:var(--red); font-weight:700; letter-spacing:1.5px; text-transform:uppercase;
+    font-size:0.78rem; margin-bottom:6px;
+  }
+  .sec-title{font-size:1.9rem; color:var(--brown); margin-bottom:28px;}
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{display:grid; grid-template-columns:1fr 1fr; gap:36px; align-items:center;}
+  @media(max-width:700px){.about-grid{grid-template-columns:1fr;}}
+  .about-card{
+    background:#fff; border-radius:16px; padding:26px;
+    box-shadow:0 8px 24px rgba(110,61,25,0.1);
+    border-left:5px solid var(--green);
+  }
+  .about-card p{line-height:1.7; margin-bottom:14px; color:#3a2a17;}
+  .info-line{display:flex; gap:10px; align-items:flex-start; margin-top:16px; font-weight:600;}
+  .info-icon{font-size:1.2rem;}
+
+  /* ---------- MENU ---------- */
+  .menu-cat{margin-bottom:38px;}
+  .menu-cat h3{
+    color:var(--red); font-size:1.25rem; margin-bottom:14px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .menu-cat h3::after{content:''; flex:1; height:2px; background:repeating-linear-gradient(90deg, var(--red) 0 6px, transparent 6px 12px); opacity:0.4;}
+  .menu-item{
+    background:#fff; border-radius:14px; padding:16px 18px;
+    display:flex; align-items:center; justify-content:space-between;
+    margin-bottom:12px; box-shadow:0 3px 10px rgba(110,61,25,0.08);
+    gap:12px; flex-wrap:wrap;
+  }
+  .item-name{font-weight:600; color:var(--ink);}
+  .item-note{font-size:0.78rem; color:#8a7660; margin-top:2px;}
+  .item-price{color:var(--brown); font-weight:700; margin-left:auto; margin-right:14px; white-space:nowrap;}
+  .qty-ctrl{display:flex; align-items:center; gap:10px; background:var(--cream); border-radius:24px; padding:4px 6px;}
+  .qty-ctrl button{
+    width:28px; height:28px; border-radius:50%; border:none; background:var(--amber);
+    color:var(--ink); font-size:1.1rem; font-weight:700; cursor:pointer; line-height:1;
+  }
+  .qty-ctrl span{min-width:18px; text-align:center; font-weight:700;}
+
+  /* ---------- GALLERY ---------- */
+  .gallery-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(150px,1fr)); gap:16px;}
+  .g-frame{
+    aspect-ratio:1/1; border-radius:14px; background:linear-gradient(135deg, var(--night-2), var(--night));
+    display:flex; align-items:center; justify-content:center; color:var(--amber-soft);
+    font-size:0.85rem; text-align:center; padding:14px; border:2px dashed rgba(242,167,59,0.4);
+  }
+
+  /* ---------- REVIEWS ---------- */
+  .review-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:18px;}
+  .review-card{
+    background:#fff; border-radius:14px; padding:20px; box-shadow:0 6px 18px rgba(110,61,25,0.08);
+  }
+  .stars{color:var(--amber); margin-bottom:8px; letter-spacing:2px;}
+  .review-name{margin-top:12px; font-weight:700; color:var(--brown); font-size:0.9rem;}
+
+  /* ---------- CONTACT ---------- */
+  .contact-box{
+    background:var(--night); color:var(--cream); border-radius:20px; padding:36px;
+    display:grid; grid-template-columns:1fr 1fr; gap:28px;
+  }
+  @media(max-width:700px){.contact-box{grid-template-columns:1fr;}}
+  .contact-box h2{color:var(--amber-soft);}
+  .contact-line{margin-top:14px; line-height:1.6;}
+  .whatsapp-big{
+    background:var(--green); color:#fff; text-align:center; border-radius:16px;
+    padding:26px; display:flex; flex-direction:column; align-items:center; gap:10px; justify-content:center;
+  }
+  .whatsapp-big .btn{background:#fff; color:var(--green);}
+
+  footer{text-align:center; padding:24px; font-size:0.8rem; color:#8a7660;}
+
+  /* ---------- STICKY CART BAR ---------- */
+  .cart-bar{
+    position:fixed; bottom:0; left:0; right:0; z-index:60;
+    background:var(--night); color:var(--cream);
+    display:flex; align-items:center; justify-content:space-between;
+    padding:12px 18px; box-shadow:0 -6px 18px rgba(0,0,0,0.25);
+    transform:translateY(100%); transition:transform .25s ease;
+  }
+  .cart-bar.show{transform:translateY(0);}
+  .cart-bar .info{font-size:0.9rem;}
+  .cart-bar .info b{color:var(--amber-soft); font-size:1.05rem;}
+
+  /* ---------- ORDER MODAL ---------- */
+  .modal-overlay{
+    position:fixed; inset:0; background:rgba(24,40,73,0.55); z-index:80;
+    display:none; align-items:center; justify-content:center; padding:20px;
+  }
+  .modal-overlay.show{display:flex;}
+  .modal{
+    background:#fff; border-radius:18px; padding:26px; max-width:420px; width:100%;
+    max-height:85vh; overflow-y:auto;
+  }
+  .modal h3{color:var(--brown); margin-bottom:6px;}
+  .modal-sub{font-size:0.85rem; color:#8a7660; margin-bottom:16px;}
+  .modal-item{display:flex; justify-content:space-between; font-size:0.9rem; padding:6px 0; border-bottom:1px solid #f0e6d4;}
+  .modal-total{display:flex; justify-content:space-between; font-weight:700; padding-top:12px; color:var(--brown); font-size:1.05rem;}
+  .field{margin-top:14px;}
+  .field label{font-size:0.82rem; font-weight:600; color:var(--brown); display:block; margin-bottom:5px;}
+  .field input, .field textarea{
+    width:100%; padding:10px 12px; border-radius:10px; border:1.5px solid #e6d7bd; font-family:inherit; font-size:0.92rem;
+  }
+  .field input:focus, .field textarea:focus{outline:none; border-color:var(--amber);}
+  .modal-actions{display:flex; gap:10px; margin-top:18px;}
+  .modal-actions .btn{flex:1;}
+  .btn-ghost{background:#f2e9d6; color:var(--brown);}
+  .empty-msg{text-align:center; color:#8a7660; font-size:0.85rem; padding:20px 0;}
+
+  .visually-hidden{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0);}
+  @media (prefers-reduced-motion: reduce){
+    .bulb{animation:none;} .steam{animation:none; display:none;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand brand-font">🫖 Musafir Cafe</div>
+  <button class="navtoggle" id="navToggle" aria-label="Menu खोलें">☰</button>
+  <div class="navlinks" id="navLinks">
+    <a href="#home">होम</a>
+    <a href="#about">अबाउट</a>
+    <a href="#menu">मेन्यू</a>
+    <a href="#gallery">गैलरी</a>
+    <a href="#reviews">रिव्यूज़</a>
+    <a href="#contact">कॉन्टैक्ट</a>
+  </div>
+</nav>
+
+<section id="home" class="hero" style="padding-top:60px;">
+  <div class="bulb-wrap"><div class="bulb"></div></div>
+  <div class="board">
+    <div class="steam s1"></div><div class="steam s2"></div><div class="steam s3"></div>
+    <h1 class="brand-font">Musafir Cafe</h1>
+    <p class="tagline">थके राही का ठिकाना — कड़क चाय, गरम समोसा</p>
+  </div>
+  <div class="hero-cta">
+    <a href="#menu" class="btn btn-amber">मेन्यू देखें</a>
+    <a href="#contact" class="btn btn-outline">लोकेशन व टाइमिंग</a>
+  </div>
+</section>
+
+<section id="about">
+  <div class="eyebrow">हमारे बारे में</div>
+  <h2 class="sec-title brand-font">Musafir Cafe</h2>
+  <div class="about-grid">
+    <div class="about-card">
+      <p>चाकिया की सड़क किनारे बना मुसाफ़िर कैफे हर राहगीर के लिए एक ठहराव है — जहाँ मिलती है कड़क चाय, गरम-गरम समोसा और थोड़ी राहत की सांस।</p>
+      <p>चाहे लंबे सफ़र का ब्रेक हो या शाम की अड्डेबाज़ी — यहाँ हर कोई अपना सा महसूस करता है।</p>
+      <div class="info-line"><span class="info-icon">📍</span><span>चाकिया</span></div>
+      <div class="info-line"><span class="info-icon">🕒</span><span>सुबह 9:00 बजे से रात 8:00 बजे तक</span></div>
+    </div>
+    <div class="about-card" style="border-left-color:var(--red);">
+      <p style="font-weight:700; color:var(--brown); font-size:1.1rem;">क्यों मुसाफ़िर कैफे?</p>
+      <p>✓ कड़क अदरक वाली चाय</p>
+      <p>✓ ताज़ा गरम समोसा</p>
+      <p>✓ ठंडी बोतलबंद पानी व कोल्ड ड्रिंक्स</p>
+      <p>✓ सस्ती और भरोसेमंद कीमतें</p>
+    </div>
+  </div>
+</section>
+
+<section id="menu">
+  <div class="eyebrow">हमारा मेन्यू</div>
+  <h2 class="sec-title">क्या-क्या मिलेगा</h2>
+  <div id="menuContainer"></div>
+</section>
+
+<section id="gallery">
+  <div class="eyebrow">तस्वीरें</div>
+  <h2 class="sec-title">फोटो गैलरी</h2>
+  <div class="gallery-grid">
+    <div class="g-frame">☕<br>यहाँ अपनी चाय की फोटो लगाएं</div>
+    <div class="g-frame">🥟<br>यहाँ समोसे की फोटो लगाएं</div>
+    <div class="g-frame">🏪<br>यहाँ दुकान की फोटो लगाएं</div>
+    <div class="g-frame">🧊<br>यहाँ कोल्ड ड्रिंक्स की फोटो लगाएं</div>
+  </div>
+  <p style="margin-top:16px; font-size:0.85rem; color:#8a7660;">नोट: यह जगह असली फोटो के लिए बनाई गई है। नीचे कोड में इन बॉक्स की जगह अपनी फोटो लगा सकते हैं।</p>
+</section>
+
+<section id="reviews">
+  <div class="eyebrow">ग्राहकों की राय</div>
+  <h2 class="sec-title">कस्टमर रिव्यूज़</h2>
+  <div class="review-grid">
+    <div class="review-card">
+      <div class="stars">★★★★★</div>
+      <p>यहाँ की चाय बहुत कड़क और स्वाद में बेहतरीन है, सफ़र में रुकने की पसंदीदा जगह।</p>
+      <div class="review-name">— ग्राहक का नाम</div>
+    </div>
+    <div class="review-card">
+      <div class="stars">★★★★★</div>
+      <p>समोसे हमेशा गरम-गरम मिलते हैं और दाम भी सही हैं।</p>
+      <div class="review-name">— ग्राहक का नाम</div>
+    </div>
+    <div class="review-card">
+      <div class="stars">★★★★☆</div>
+      <p>रोज़ आने-जाने के रास्ते में रुकने की अच्छी जगह है।</p>
+      <div class="review-name">— ग्राहक का नाम</div>
+    </div>
+  </div>
+  <p style="margin-top:16px; font-size:0.85rem; color:#8a7660;">नोट: ये सैंपल रिव्यूज़ हैं। असली ग्राहकों की राय मिलने पर इन्हें बदल दें।</p>
+</section>
+
+<section id="contact">
+  <div class="eyebrow">संपर्क करें</div>
+  <h2 class="sec-title">कॉन्टैक्ट</h2>
+  <div class="contact-box">
+    <div>
+      <h2 class="brand-font">Musafir Cafe</h2>
+      <div class="contact-line">📍 चाकिया</div>
+      <div class="contact-line">🕒 सुबह 9:00 बजे – रात 8:00 बजे (रोज़ाना)</div>
+      <div class="contact-line">📞 +91 90659 29182</div>
+    </div>
+    <div class="whatsapp-big">
+      <div style="font-size:2rem;">💬</div>
+      <div>सीधे WhatsApp पर बात करें या ऑर्डर करें</div>
+      <a class="btn" href="https://wa.me/919065929182" target="_blank" rel="noopener">WhatsApp खोलें</a>
+    </div>
+  </div>
+</section>
+
+<footer>© 2026 Musafir Cafe, Chakia · बनाया गया मुसाफ़िरों के लिए ❤️</footer>
+
+<!-- Sticky cart bar -->
+<div class="cart-bar" id="cartBar">
+  <div class="info"><b id="cartCount">0</b> आइटम · कुल ₹<span id="cartTotal">0</span></div>
+  <button class="btn btn-amber" id="openOrderBtn">ऑर्डर देखें</button>
+</div>
+
+<!-- Order modal -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <h3>आपका ऑर्डर</h3>
+    <div class="modal-sub">डिटेल भरें, फिर WhatsApp पर भेजें</div>
+    <div id="modalItems"></div>
+    <div class="modal-total"><span>कुल राशि</span><span>₹<span id="modalTotal">0</span></span></div>
+    <div class="field">
+      <label for="custName">आपका नाम *</label>
+      <input type="text" id="custName" placeholder="जैसे: राहुल शर्मा">
+    </div>
+    <div class="field">
+      <label for="custNote">कोई नोट / टेबल / एड्रेस (वैकल्पिक)</label>
+      <textarea id="custNote" rows="2" placeholder="जैसे: पार्सल चाहिए / टेबल नंबर"></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" id="closeModalBtn">बंद करें</button>
+      <button class="btn btn-amber" id="sendWaBtn">WhatsApp पर भेजें</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const WHATSAPP_NUMBER = "919065929182";
+
+  const menuData = [
+    { category: "चाय / पेय", items: [
+      { id: "tea", name: "कड़क चाय", price: 10, unit: "प्रति कप" },
+    ]},
+    { category: "नाश्ता", items: [
+      { id: "samosa", name: "समोसा", price: 10, unit: "प्रति पीस" },
+    ]},
+    { category: "पानी की बोतल", items: [
+      { id: "water1l", name: "पानी की बोतल (1 लीटर)", price: 20, unit: "" },
+      { id: "water500", name: "पानी की बोतल (500 मिली)", price: 10, unit: "" },
+    ]},
+    { category: "कोल्ड ड्रिंक्स", items: [
+      { id: "sprite", name: "स्प्राइट (1.5 लीटर)", price: 99, unit: "अनुमानित MRP — जांच लें" },
+    ]},
+    { category: "अन्य", items: [
+      { id: "cigarette", name: "सिगरेट", price: 10, unit: "प्रति नग · ब्रांड अनुसार ₹5–10" },
+    ]},
+  ];
+
+  const cart = {}; // id -> qty
+
+  function renderMenu(){
+    const container = document.getElementById('menuContainer');
+    container.innerHTML = '';
+    menuData.forEach(cat => {
+      const catDiv = document.createElement('div');
+      catDiv.className = 'menu-cat';
+      const h3 = document.createElement('h3');
+      h3.textContent = cat.category;
+      catDiv.appendChild(h3);
+
+      cat.items.forEach(item => {
+        const row = document.createElement('div');
+        row.className = 'menu-item';
+        row.innerHTML = `
+          <div>
+            <div class="item-name">${item.name}</div>
+            ${item.unit ? `<div class="item-note">${item.unit}</div>` : ''}
+          </div>
+          <div class="item-price">₹${item.price}</div>
+          <div class="qty-ctrl">
+            <button aria-label="घटाएं" data-action="dec" data-id="${item.id}">−</button>
+            <span id="qty-${item.id}">0</span>
+            <button aria-label="बढ़ाएं" data-action="inc" data-id="${item.id}">+</button>
+          </div>
+        `;
+        catDiv.appendChild(row);
+      });
+      container.appendChild(catDiv);
+    });
+  }
+
+  function getItemById(id){
+    for(const cat of menuData){
+      const found = cat.items.find(i => i.id === id);
+      if(found) return found;
+    }
+    return null;
+  }
+
+  function updateQty(id, delta){
+    const current = cart[id] || 0;
+    const next = Math.max(0, current + delta);
+    cart[id] = next;
+    document.getElementById(`qty-${id}`).textContent = next;
+    updateCartBar();
+  }
+
+  function updateCartBar(){
+    let count = 0, total = 0;
+    Object.entries(cart).forEach(([id, qty]) => {
+      if(qty > 0){
+        count += qty;
+        const item = getItemById(id);
+        if(item) total += item.price * qty;
+      }
+    });
+    document.getElementById('cartCount').textContent = count;
+    document.getElementById('cartTotal').textContent = total;
+    document.getElementById('cartBar').classList.toggle('show', count > 0);
+  }
+
+  document.getElementById('menuContainer').addEventListener('click', (e) => {
+    const btn = e.target.closest('button[data-action]');
+    if(!btn) return;
+    const id = btn.dataset.id;
+    const delta = btn.dataset.action === 'inc' ? 1 : -1;
+    updateQty(id, delta);
+  });
+
+  // Modal
+  const modalOverlay = document.getElementById('modalOverlay');
+  document.getElementById('openOrderBtn').addEventListener('click', () => {
+    renderModal();
+    modalOverlay.classList.add('show');
+  });
+  document.getElementById('closeModalBtn').addEventListener('click', () => {
+    modalOverlay.classList.remove('show');
+  });
+  modalOverlay.addEventListener('click', (e) => {
+    if(e.target === modalOverlay) modalOverlay.classList.remove('show');
+  });
+
+  function renderModal(){
+    const modalItems = document.getElementById('modalItems');
+    modalItems.innerHTML = '';
+    let total = 0;
+    let hasItems = false;
+    Object.entries(cart).forEach(([id, qty]) => {
+      if(qty > 0){
+        hasItems = true;
+        const item = getItemById(id);
+        const lineTotal = item.price * qty;
+        total += lineTotal;
+        const row = document.createElement('div');
+        row.className = 'modal-item';
+        row.innerHTML = `<span>${item.name} × ${qty}</span><span>₹${lineTotal}</span>`;
+        modalItems.appendChild(row);
+      }
+    });
+    if(!hasItems){
+      modalItems.innerHTML = '<div class="empty-msg">अभी कोई आइटम नहीं चुना गया</div>';
+    }
+    document.getElementById('modalTotal').textContent = total;
+  }
+
+  document.getElementById('sendWaBtn').addEventListener('click', () => {
+    const name = document.getElementById('custName').value.trim();
+    const note = document.getElementById('custNote').value.trim();
+    const hasItems = Object.values(cart).some(q => q > 0);
+
+    if(!hasItems){
+      alert('कृपया पहले मेन्यू से कुछ आइटम चुनें।');
+      return;
+    }
+    if(!name){
+      alert('कृपया अपना नाम भरें।');
+      document.getElementById('custName').focus();
+      return;
+    }
+
+    let lines = [];
+    lines.push(`🙏 *Musafir Cafe — नया ऑर्डर*`);
+    lines.push(`👤 नाम: ${name}`);
+    lines.push('');
+    lines.push('🧾 ऑर्डर डिटेल:');
+    let total = 0;
+    Object.entries(cart).forEach(([id, qty]) => {
+      if(qty > 0){
+        const item = getItemById(id);
+        const lineTotal = item.price * qty;
+        total += lineTotal;
+        lines.push(`- ${item.name} × ${qty} = ₹${lineTotal}`);
+      }
+    });
+    lines.push('');
+    lines.push(`💰 कुल: ₹${total}`);
+    if(note) lines.push(`📝 नोट: ${note}`);
+
+    const message = encodeURIComponent(lines.join('\n'));
+    const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
+    window.open(waUrl, '_blank');
+  });
+
+  // Mobile nav toggle
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+  renderMenu();
+</script>
+
+</body>
+</html>
