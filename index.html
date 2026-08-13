@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="hi">
 <head>
 <meta charset="UTF-8">
@@ -114,6 +114,54 @@
   .hero-cta{
     margin-top:34px; display:inline-flex; gap:14px; flex-wrap:wrap; justify-content:center;
   }
+
+  /* ---------- MUSIC PLAYER ---------- */
+  .music-player{
+    margin:28px auto 0; max-width:320px;
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+    border:1px solid rgba(255,255,255,0.18);
+    border-radius:20px; padding:14px 18px 16px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.3);
+  }
+  .music-track{
+    display:flex; align-items:center; gap:10px; margin-bottom:10px;
+  }
+  .music-note{
+    width:34px; height:34px; border-radius:50%; flex-shrink:0;
+    background:linear-gradient(135deg, var(--amber), var(--red));
+    display:flex; align-items:center; justify-content:center; font-size:1rem;
+    animation:spinNote 6s linear infinite paused;
+  }
+  .music-player.playing .music-note{animation-play-state:running;}
+  @keyframes spinNote{ from{transform:rotate(0deg);} to{transform:rotate(360deg);} }
+  .music-title{
+    color:var(--amber-soft); font-size:0.82rem; font-weight:600;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis; flex:1;
+  }
+  .music-progress{
+    width:100%; height:4px; background:rgba(255,255,255,0.15);
+    border-radius:4px; overflow:hidden; margin-bottom:12px;
+  }
+  .music-progress-fill{
+    height:100%; width:0%; background:var(--amber); border-radius:4px;
+    transition:width .3s linear;
+  }
+  .music-controls{
+    display:flex; align-items:center; justify-content:center; gap:22px;
+  }
+  .music-btn{
+    background:none; border:none; color:var(--cream); cursor:pointer;
+    display:flex; align-items:center; justify-content:center; padding:4px;
+    opacity:0.85; transition:opacity .15s, transform .15s;
+  }
+  .music-btn:hover{opacity:1; transform:scale(1.08);}
+  .music-btn svg{width:20px; height:20px;}
+  .music-btn.play-pause{
+    width:42px; height:42px; border-radius:50%; background:var(--amber); color:var(--ink); opacity:1;
+  }
+  .music-btn.play-pause svg{width:18px; height:18px;}
+  #yt-player-wrap{position:absolute; width:1px; height:1px; overflow:hidden; opacity:0;}
   .btn{
     display:inline-block; padding:12px 26px; border-radius:30px; font-weight:600;
     font-size:0.95rem; cursor:pointer; border:none; transition:transform .15s ease, box-shadow .15s ease;
@@ -150,21 +198,32 @@
     display:flex; align-items:center; gap:10px;
   }
   .menu-cat h3::after{content:''; flex:1; height:2px; background:repeating-linear-gradient(90deg, var(--red) 0 6px, transparent 6px 12px); opacity:0.4;}
-  .menu-item{
-    background:#fff; border-radius:14px; padding:16px 18px;
-    display:flex; align-items:center; justify-content:space-between;
-    margin-bottom:12px; box-shadow:0 3px 10px rgba(110,61,25,0.08);
-    gap:12px; flex-wrap:wrap;
+  .menu-grid{
+    display:grid; grid-template-columns:repeat(auto-fill, minmax(140px,1fr)); gap:16px;
   }
-  .item-name{font-weight:600; color:var(--ink);}
-  .item-note{font-size:0.78rem; color:#8a7660; margin-top:2px;}
-  .item-price{color:var(--brown); font-weight:700; margin-left:auto; margin-right:14px; white-space:nowrap;}
-  .qty-ctrl{display:flex; align-items:center; gap:10px; background:var(--cream); border-radius:24px; padding:4px 6px;}
+  .item-card{
+    background:#fff; border-radius:16px; overflow:hidden;
+    box-shadow:0 4px 14px rgba(110,61,25,0.1);
+    display:flex; flex-direction:column;
+  }
+  .item-photo{
+    aspect-ratio:1/1; display:flex; align-items:center; justify-content:center;
+    font-size:2.6rem; position:relative; overflow:hidden;
+  }
+  .item-photo img{width:100%; height:100%; object-fit:cover;}
+  .item-body{padding:10px 12px 14px; text-align:center;}
+  .item-name{font-weight:600; color:var(--ink); font-size:0.92rem; line-height:1.25; min-height:2.3em;}
+  .item-note{font-size:0.72rem; color:#8a7660; margin-top:2px;}
+  .item-price{color:var(--brown); font-weight:800; margin-top:6px; font-size:1.02rem;}
+  .qty-ctrl{
+    display:flex; align-items:center; justify-content:center; gap:12px;
+    background:var(--cream); border-radius:24px; padding:5px 8px; margin-top:10px;
+  }
   .qty-ctrl button{
-    width:28px; height:28px; border-radius:50%; border:none; background:var(--amber);
-    color:var(--ink); font-size:1.1rem; font-weight:700; cursor:pointer; line-height:1;
+    width:26px; height:26px; border-radius:50%; border:none; background:var(--amber);
+    color:var(--ink); font-size:1.05rem; font-weight:700; cursor:pointer; line-height:1;
   }
-  .qty-ctrl span{min-width:18px; text-align:center; font-weight:700;}
+  .qty-ctrl span{min-width:16px; text-align:center; font-weight:700;}
 
   /* ---------- GALLERY ---------- */
   .gallery-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(150px,1fr)); gap:16px;}
@@ -263,6 +322,27 @@
     <h1 class="brand-font">Musafir Cafe</h1>
     <p class="tagline">थके राही का ठिकाना — कड़क चाय, गरम समोसा</p>
   </div>
+
+  <div class="music-player" id="musicPlayer">
+    <div class="music-track">
+      <div class="music-note">🎵</div>
+      <div class="music-title" id="musicTitle">गाना लोड हो रहा है...</div>
+    </div>
+    <div class="music-progress"><div class="music-progress-fill" id="musicProgress"></div></div>
+    <div class="music-controls">
+      <button class="music-btn" id="prevBtn" aria-label="पिछला गाना">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+      </button>
+      <button class="music-btn play-pause" id="playPauseBtn" aria-label="प्ले/पॉज़">
+        <svg id="playIcon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+      </button>
+      <button class="music-btn" id="nextBtn" aria-label="अगला गाना">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 6h2v12h-2zM6 6l8.5 6L6 18z"/></svg>
+      </button>
+    </div>
+  </div>
+  <div id="yt-player-wrap"><div id="yt-player"></div></div>
+
   <div class="hero-cta">
     <a href="#menu" class="btn btn-amber">मेन्यू देखें</a>
     <a href="#contact" class="btn btn-outline">लोकेशन व टाइमिंग</a>
@@ -292,6 +372,7 @@
 <section id="menu">
   <div class="eyebrow">हमारा मेन्यू</div>
   <h2 class="sec-title">क्या-क्या मिलेगा</h2>
+  <p style="font-size:0.82rem; color:#8a7660; margin:-16px 0 24px;">फोटो अभी सैंपल हैं — असली फोटो भेजेंगे तो उन्हें लगा दूंगा।</p>
   <div id="menuContainer"></div>
 </section>
 
@@ -382,177 +463,10 @@
   const WHATSAPP_NUMBER = "919065929182";
 
   const menuData = [
-    { category: "चाय / पेय", items: [
-      { id: "tea", name: "कड़क चाय", price: 10, unit: "प्रति कप" },
+    { category: "चाय / गरम पेय", items: [
+      { id: "tea", name: "कड़क चाय", price: 10, unit: "प्रति कप", emoji: "☕", bg: "linear-gradient(135deg,#F2A73B,#C1443C)" },
+      { id: "masalatea", name: "मसाला चाय", price: 10, unit: "प्रति कप", emoji: "🫖", bg: "linear-gradient(135deg,#C1443C,#7A4419)" },
+      { id: "lemontea", name: "लेमन टी", price: 10, unit: "प्रति कप", emoji: "🍵", bg: "linear-gradient(135deg,#3F6B4A,#F2A73B)" },
+      { id: "coffee", name: "कॉफी", price: 10, unit: "प्रति कप", emoji: "☕", bg: "linear-gradient(135deg,#6E3D19,#241708)" },
     ]},
-    { category: "नाश्ता", items: [
-      { id: "samosa", name: "समोसा", price: 10, unit: "प्रति पीस" },
-    ]},
-    { category: "पानी की बोतल", items: [
-      { id: "water1l", name: "पानी की बोतल (1 लीटर)", price: 20, unit: "" },
-      { id: "water500", name: "पानी की बोतल (500 मिली)", price: 10, unit: "" },
-    ]},
-    { category: "कोल्ड ड्रिंक्स", items: [
-      { id: "sprite", name: "स्प्राइट (1.5 लीटर)", price: 99, unit: "अनुमानित MRP — जांच लें" },
-    ]},
-    { category: "अन्य", items: [
-      { id: "cigarette", name: "सिगरेट", price: 10, unit: "प्रति नग · ब्रांड अनुसार ₹5–10" },
-    ]},
-  ];
-
-  const cart = {}; // id -> qty
-
-  function renderMenu(){
-    const container = document.getElementById('menuContainer');
-    container.innerHTML = '';
-    menuData.forEach(cat => {
-      const catDiv = document.createElement('div');
-      catDiv.className = 'menu-cat';
-      const h3 = document.createElement('h3');
-      h3.textContent = cat.category;
-      catDiv.appendChild(h3);
-
-      cat.items.forEach(item => {
-        const row = document.createElement('div');
-        row.className = 'menu-item';
-        row.innerHTML = `
-          <div>
-            <div class="item-name">${item.name}</div>
-            ${item.unit ? `<div class="item-note">${item.unit}</div>` : ''}
-          </div>
-          <div class="item-price">₹${item.price}</div>
-          <div class="qty-ctrl">
-            <button aria-label="घटाएं" data-action="dec" data-id="${item.id}">−</button>
-            <span id="qty-${item.id}">0</span>
-            <button aria-label="बढ़ाएं" data-action="inc" data-id="${item.id}">+</button>
-          </div>
-        `;
-        catDiv.appendChild(row);
-      });
-      container.appendChild(catDiv);
-    });
-  }
-
-  function getItemById(id){
-    for(const cat of menuData){
-      const found = cat.items.find(i => i.id === id);
-      if(found) return found;
-    }
-    return null;
-  }
-
-  function updateQty(id, delta){
-    const current = cart[id] || 0;
-    const next = Math.max(0, current + delta);
-    cart[id] = next;
-    document.getElementById(`qty-${id}`).textContent = next;
-    updateCartBar();
-  }
-
-  function updateCartBar(){
-    let count = 0, total = 0;
-    Object.entries(cart).forEach(([id, qty]) => {
-      if(qty > 0){
-        count += qty;
-        const item = getItemById(id);
-        if(item) total += item.price * qty;
-      }
-    });
-    document.getElementById('cartCount').textContent = count;
-    document.getElementById('cartTotal').textContent = total;
-    document.getElementById('cartBar').classList.toggle('show', count > 0);
-  }
-
-  document.getElementById('menuContainer').addEventListener('click', (e) => {
-    const btn = e.target.closest('button[data-action]');
-    if(!btn) return;
-    const id = btn.dataset.id;
-    const delta = btn.dataset.action === 'inc' ? 1 : -1;
-    updateQty(id, delta);
-  });
-
-  // Modal
-  const modalOverlay = document.getElementById('modalOverlay');
-  document.getElementById('openOrderBtn').addEventListener('click', () => {
-    renderModal();
-    modalOverlay.classList.add('show');
-  });
-  document.getElementById('closeModalBtn').addEventListener('click', () => {
-    modalOverlay.classList.remove('show');
-  });
-  modalOverlay.addEventListener('click', (e) => {
-    if(e.target === modalOverlay) modalOverlay.classList.remove('show');
-  });
-
-  function renderModal(){
-    const modalItems = document.getElementById('modalItems');
-    modalItems.innerHTML = '';
-    let total = 0;
-    let hasItems = false;
-    Object.entries(cart).forEach(([id, qty]) => {
-      if(qty > 0){
-        hasItems = true;
-        const item = getItemById(id);
-        const lineTotal = item.price * qty;
-        total += lineTotal;
-        const row = document.createElement('div');
-        row.className = 'modal-item';
-        row.innerHTML = `<span>${item.name} × ${qty}</span><span>₹${lineTotal}</span>`;
-        modalItems.appendChild(row);
-      }
-    });
-    if(!hasItems){
-      modalItems.innerHTML = '<div class="empty-msg">अभी कोई आइटम नहीं चुना गया</div>';
-    }
-    document.getElementById('modalTotal').textContent = total;
-  }
-
-  document.getElementById('sendWaBtn').addEventListener('click', () => {
-    const name = document.getElementById('custName').value.trim();
-    const note = document.getElementById('custNote').value.trim();
-    const hasItems = Object.values(cart).some(q => q > 0);
-
-    if(!hasItems){
-      alert('कृपया पहले मेन्यू से कुछ आइटम चुनें।');
-      return;
-    }
-    if(!name){
-      alert('कृपया अपना नाम भरें।');
-      document.getElementById('custName').focus();
-      return;
-    }
-
-    let lines = [];
-    lines.push(`🙏 *Musafir Cafe — नया ऑर्डर*`);
-    lines.push(`👤 नाम: ${name}`);
-    lines.push('');
-    lines.push('🧾 ऑर्डर डिटेल:');
-    let total = 0;
-    Object.entries(cart).forEach(([id, qty]) => {
-      if(qty > 0){
-        const item = getItemById(id);
-        const lineTotal = item.price * qty;
-        total += lineTotal;
-        lines.push(`- ${item.name} × ${qty} = ₹${lineTotal}`);
-      }
-    });
-    lines.push('');
-    lines.push(`💰 कुल: ₹${total}`);
-    if(note) lines.push(`📝 नोट: ${note}`);
-
-    const message = encodeURIComponent(lines.join('\n'));
-    const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
-    window.open(waUrl, '_blank');
-  });
-
-  // Mobile nav toggle
-  const navToggle = document.getElementById('navToggle');
-  const navLinks = document.getElementById('navLinks');
-  navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
-  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
-
-  renderMenu();
-</script>
-
-</body>
-</html>
+    { category: "नाश्ता /
